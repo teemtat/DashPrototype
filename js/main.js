@@ -25,11 +25,11 @@ const seedTasks = [
     connRate: 66.8, avgDuration: '1m 42s', createdAt: '2026-05-05'
   },
   {
-    id: 'ORD-2343', name: 'True Move Renewal',
-    client: 'AIS', dialogue: 'Package Renewal v1', callerLine: 'True Line 1',
+    id: 'ORD-2343', name: 'AIS Renewal',
+    client: 'AIS', dialogue: 'Package Renewal v1', callerLine: 'AIS Line 1',
     contacts: 20000, workDays: 'Monday – Friday', workStart: '09:00', workEnd: '17:00',
     maxRetries: '2', retryInterval: '1 hour',
-    contactFile: 'truemove_renewal.xlsx', dncFile: null,
+    contactFile: 'AIS_renewal.xlsx', dncFile: null,
     status: 'running', progress: 88, processed: 17600,
     connRate: 69.4, avgDuration: '2m 05s', createdAt: '2026-05-01'
   },
@@ -112,7 +112,8 @@ function showScreen(name, el) {
     ctaBtn.style.display = ctas[name] === '' ? 'none' : '';
   }
 
-  if (name === "tasks") renderTasks();
+  if (name === 'tasks')   renderTasks();
+  if (name === 'inbound') renderInbound();
   renderDashboard();
 }
 
@@ -129,11 +130,145 @@ function showTab(name, btn) {
   btn.classList.add('active');
 }
 
+// ── INBOUND CALLS ────────────────────────────────────────
+function renderInbound() {
+  const tbody = document.getElementById('inbound-tbody');
+  if (!tbody || typeof INBOUND_CALLS === 'undefined') return;
+
+  const connLabel = { connected: 'Connected', noanswer: 'Hung Up', transferred: 'Transferred', busy: 'Busy' };
+
+  tbody.innerHTML = INBOUND_CALLS.calls.map(call => {
+    const intentCell = call.intent
+      ? `<span class="intent-tag intent-${call.intentCategory}">${call.intent}</span>`
+      : '—';
+    const resCell = call.resolution
+      ? `<span class="res-tag res-${call.resolution}">${capitalize(call.resolution)}</span>`
+      : '—';
+    return `<tr class="inbound-row" data-call-id="${call.id}">
+      <td>${call.caller}</td>
+      <td>${call.line}</td>
+      <td>${call.date}&nbsp;&nbsp;${call.time}</td>
+      <td>${call.duration}</td>
+      <td><span class="status status-${call.connection}">${connLabel[call.connection] || call.connection}</span></td>
+      <td>${intentCell}</td>
+      <td>${resCell}</td>
+    </tr>`;
+  }).join('');
+
+  // Attach click listeners directly to each row
+  tbody.querySelectorAll('tr.inbound-row').forEach(row => {
+    row.addEventListener('click', () => openCallDrawer(row.dataset.callId));
+  });
+}
+
+function capitalize(str) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 // ── DRAWER ───────────────────────────────────────────────
-function openCallDrawer() {
+function openCallDrawer(id) {
+  const call = (typeof INBOUND_CALLS !== 'undefined')
+    ? INBOUND_CALLS.calls.find(c => c.id === id)
+    : null;
+
+  if (call) {
+    const connLabel = { connected: 'Connected', noanswer: 'Hung Up', transferred: 'Transferred', busy: 'Busy' };
+
+    // Header
+    document.getElementById('drawer-caller-title').textContent = call.caller;
+    document.getElementById('drawer-sub').innerHTML =
+      `${call.line} &nbsp;·&nbsp; ${call.date}, ${call.time} &nbsp;·&nbsp; ${call.duration}`;
+    const badge = document.getElementById('drawer-connection-badge');
+    badge.textContent = connLabel[call.connection] || call.connection;
+    badge.className   = `status status-${call.connection}`;
+
+    // Chat transcript
+    const thread = document.getElementById('drawer-chat-thread');
+    if (call.transcript.length > 0) {
+      thread.innerHTML = call.transcript.map(msg => {
+        if (msg.speaker === 'bot') {
+          return `<div class="chat-msg bot">
+            <div class="chat-avatar bot-avatar">🤖</div>
+            <div class="chat-bubble-wrap">
+              <div class="chat-name">aunjai <span class="chat-time">${msg.time}</span></div>
+              <div class="chat-bubble bot-bubble">${msg.text}</div>
+            </div>
+          </div>`;
+        } else {
+          return `<div class="chat-msg customer">
+            <div class="chat-bubble-wrap">
+              <div class="chat-name">Customer <span class="chat-time">${msg.time}</span></div>
+              <div class="chat-bubble customer-bubble">${msg.text}</div>
+            </div>
+            <div class="chat-avatar customer-avatar">👤</div>
+          </div>`;
+        }
+      }).join('');
+    } else {
+      thread.innerHTML = `<div style="text-align:center;color:#b0b0b0;font-size:13px;padding:40px 0;">No conversation — call was not answered.</div>`;
+    }
+
+    // End note
+    const endNote = document.getElementById('drawer-chat-end-note');
+    if (call.intent) {
+      endNote.innerHTML = `🏁 Call ended — Final Intent: <strong>${call.intent}</strong> · Resolution: <strong>${capitalize(call.resolution)}</strong>`;
+      endNote.style.display = '';
+    } else {
+      endNote.style.display = 'none';
+    }
+
+    // Detail panel
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    set('drawer-detail-caller',   call.caller);
+    set('drawer-detail-line',     call.line);
+    set('drawer-detail-datetime', `${call.date}, ${call.time}`);
+    set('drawer-detail-duration', call.duration);
+
+    document.getElementById('drawer-detail-connection').innerHTML =
+      `<span class="status status-${call.connection}">${connLabel[call.connection] || call.connection}</span>`;
+
+    const intentEl    = document.getElementById('drawer-detail-intent');
+    const intentSubEl = document.getElementById('drawer-detail-intent-sub');
+    if (call.intent) {
+      intentEl.innerHTML      = `<span class="intent-tag intent-${call.intentCategory}">${call.intent}</span>`;
+      intentSubEl.textContent = call.intentLabel;
+      intentSubEl.style.display = '';
+    } else {
+      intentEl.textContent      = '—';
+      intentSubEl.style.display = 'none';
+    }
+
+    const resEl    = document.getElementById('drawer-detail-resolution');
+    const resSubEl = document.getElementById('drawer-detail-resolution-sub');
+    if (call.resolution) {
+      resEl.innerHTML      = `<span class="res-tag res-${call.resolution}">${capitalize(call.resolution)}</span>`;
+      resSubEl.textContent = call.resolutionLabel;
+      resSubEl.style.display = '';
+    } else {
+      resEl.textContent      = '—';
+      resSubEl.style.display = 'none';
+    }
+
+    const taskEl    = document.getElementById('drawer-detail-linked-task');
+    const taskSubEl = document.getElementById('drawer-detail-linked-sub');
+    if (call.linkedTask) {
+      taskEl.textContent    = call.linkedTaskName;
+      taskEl.style.color    = '#00a651';
+      taskEl.style.cursor   = 'pointer';
+      taskSubEl.textContent = call.linkedTask;
+    } else {
+      taskEl.textContent    = '—';
+      taskEl.style.color    = '';
+      taskEl.style.cursor   = '';
+      taskSubEl.textContent = '';
+    }
+  }
+
   document.getElementById('callDrawer').classList.add('open');
   document.getElementById('drawerBackdrop').classList.add('open');
 }
+
 function closeCallDrawer() {
   document.getElementById('callDrawer').classList.remove('open');
   document.getElementById('drawerBackdrop').classList.remove('open');
@@ -151,6 +286,7 @@ function filterTasks(status, btn) {
 function renderAll() {
   renderTasks();
   renderDashboard();
+  renderInbound();
 }
 
 function renderTasks() {
@@ -505,4 +641,15 @@ function deleteTask(id) {
 // ── INIT ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   renderAll();
+
+  // Event delegation for inbound table rows (more reliable than inline onclick)
+  const inboundTable = document.querySelector('#screen-inbound table');
+  if (inboundTable) {
+    inboundTable.addEventListener('click', (e) => {
+      const row = e.target.closest('tr.inbound-row');
+      if (row && row.dataset.callId) {
+        openCallDrawer(row.dataset.callId);
+      }
+    });
+  }
 });

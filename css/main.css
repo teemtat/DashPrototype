@@ -876,6 +876,43 @@ tbody tr:hover td { background: #fdfcfc; }
 .tag-D { background: #fff5f5; color: #c62828; }
 .tag-E { background: #f5f0ff; color: #6a1b9a; }
 
+/* ── Intent Tags ── */
+.intent-tag {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'SFMono-Regular', 'Consolas', monospace;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+/* eKYC / Account Opening — purple */
+.intent-ekyc   { background: #f3e8ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+/* NDID / Digital Verification — orange */
+.intent-ndid   { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+/* Dipchip — teal/green */
+.intent-dipchip { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+/* Inquiry — blue */
+.intent-inquiry { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+/* FAQ / App — slate */
+.intent-faq    { background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; }
+
+/* ── Resolution Status Tags ── */
+.res-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.res-resolved   { background: #f0faf5; color: #00a651; border: 1px solid #b8e6cf; }
+.res-transferred { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.res-pending    { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.res-escalated  { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+.res-none       { background: #f9fafb; color: #6b7280; border: 1px solid #e5e7eb; }
+
 /* ══════════════════════════════════════════
    HEALTH CARDS
 ══════════════════════════════════════════ */

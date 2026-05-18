@@ -46,13 +46,8 @@
       <span class="bc-current" id="topbar-bc">Dashboard</span>
     </div>
 
-    <!-- <div class="topbar-search">
-      <span>🔍</span> Search anything...
-    </div> -->
-
     <div class="topbar-actions">
       <button class="btn-icon" title="Notifications">🔔</button>
-      <!-- <button class="btn btn-primary" id="topbar-cta" onclick="openModal('createTask')">+ New Task</button> -->
     </div>
   </div>
 
@@ -61,13 +56,10 @@
 
   <!-- DASHBOARD -->
     <div class="screen active" id="screen-dashboard">
-
       <div class="welcome-banner">
         <h2>Welcome, Admin 👋</h2>
         <p>Manage tasks, track calls, and monitor your AI calling system — all in one place.</p>
       </div>
-
-      <!-- <div class="alert alert-info">🤖 3 tasks are currently running — 1,240 contacts being processed right now.</div> -->
 
       <!-- KPI Cards -->
       <div class="kpi-grid">
@@ -122,7 +114,6 @@
           <div class="overview-header">
             <div>
               <h3>Debt Result</h3>
-              <!-- <div class="overview-meta">Avg per month</div> -->
               <div class="overview-highlight">1,860 / 3K <span>50.2% ▲</span></div>
             </div>
             <button class="date-filter">Last Month ▾</button>
@@ -144,7 +135,7 @@
             </svg>
             <div class="donut-legend">
               <div class="donut-item"><div class="donut-dot" style="background:#00a651;"></div>Willing to Repay<div class="donut-pct">68.4%</div></div>
-              <div class="donut-item"><div class="donut-dot" style="background:#d0d0d0;"></div>No Answer<div class="donut-pct">20.1%</div></div>
+              <div class="donut-item"><div class="donut-dot" style="background:#d0d0d0;"></div>Hung Up<div class="donut-pct">20.1%</div></div>
               <div class="donut-item"><div class="donut-dot" style="background:#e0e0e0;"></div>Busy<div class="donut-pct">8.6%</div></div>
               <div class="donut-item"><div class="donut-dot" style="background:#ebebeb;"></div>Transferred<div class="donut-pct">2.9%</div></div>
             </div>
@@ -172,7 +163,7 @@
             </svg>
             <div class="donut-legend">
               <div class="donut-item"><div class="donut-dot" style="background:#00a651;"></div>Connected<div class="donut-pct">68.4%</div></div>
-              <div class="donut-item"><div class="donut-dot" style="background:#d0d0d0;"></div>No Answer<div class="donut-pct">20.1%</div></div>
+              <div class="donut-item"><div class="donut-dot" style="background:#d0d0d0;"></div>Hung Up<div class="donut-pct">20.1%</div></div>
               <div class="donut-item"><div class="donut-dot" style="background:#e0e0e0;"></div>Busy<div class="donut-pct">8.6%</div></div>
               <div class="donut-item"><div class="donut-dot" style="background:#ebebeb;"></div>Transferred<div class="donut-pct">2.9%</div></div>
             </div>
@@ -244,7 +235,7 @@
         <button class="btn btn-primary btn-sm" onclick="openCreateTask()">+ New Task</button>
       </div>
 
-      <!-- Task Cards Grid — populated by JS -->
+      <!-- Task Grid — populated by JS -->
       <div class="task-card-grid" id="task-card-grid"><!-- JS renders here --></div>
     </div>
 
@@ -259,7 +250,7 @@
         <div class="kpi-mini"><div class="mval" style="color:#00a651;">72.1%</div><div class="mlbl">Connected</div></div>
         <div class="kpi-mini"><div class="mval">1m 28s</div><div class="mlbl">Avg Duration</div></div>
         <div class="kpi-mini"><div class="mval">4.2%</div><div class="mlbl">Transferred</div></div>
-        <div class="kpi-mini"><div class="mval">23.7%</div><div class="mlbl">No Answer</div></div>
+        <div class="kpi-mini"><div class="mval">23.7%</div><div class="mlbl">Hung Up</div></div>
       </div>
 
       <div class="table-wrap">
@@ -272,85 +263,9 @@
           <button class="btn btn-outline btn-sm">⬇ Export</button>
         </div>
         <table>
-          <thead><tr><th>Caller Number</th><th>Client Line</th><th>Date &amp; Time</th><th>Duration</th><th>Connection</th><th>Final Intent</th><th>Payment Status</th></tr></thead>
-          <tbody>
-            <tr class="inbound-row" onclick="openCallDrawer()"><td>+66 81 234 5678</td><td>AIS Line 1</td><td>14 May 2026  09:12</td><td>2m 14s</td><td><span class="status status-connected">Connected</span></td><td><span class="tag tag-A">A — Agree</span></td><td><span class="tag tag-B">Paid</span></td></tr>
-            <tr class="inbound-row" onclick="openCallDrawer()"><td>+66 89 876 5432</td><td>AIS Line 2</td><td>14 May 2026  09:30</td><td>0m 48s</td><td><span class="status status-noanswer">No Answer</span></td><td>—</td><td>—</td></tr>
-            <tr class="inbound-row" onclick="openCallDrawer()"><td>+66 92 111 2233</td><td>AIS Line 1</td><td>14 May 2026  10:05</td><td>3m 02s</td><td><span class="status status-transfer">Transferred</span></td><td><span class="tag tag-C">C — Negotiation</span></td><td><span class="tag tag-D">Pending</span></td></tr>
-            <tr class="inbound-row" onclick="openCallDrawer()"><td>+66 85 444 9900</td><td>AIS Line 1</td><td>14 May 2026  10:44</td><td>1m 37s</td><td><span class="status status-connected">Connected</span></td><td><span class="tag tag-B">B — Callback</span></td><td><span class="tag tag-E">Instalment</span></td></tr>
-            <tr class="inbound-row" onclick="openCallDrawer()"><td>+66 61 555 0011</td><td>AIS Line 2</td><td>14 May 2026  11:17</td><td>1m 09s</td><td><span class="status status-busy">Busy</span></td><td>—</td><td>—</td></tr>
-            <tr class="inbound-row" onclick="openCallDrawer()"><td>+66 89 876 5432</td><td>AIS Line 2</td><td>14 May 2026  09:30</td><td>0m 48s</td><td><span class="status status-noanswer">No Answer</span></td><td>—</td><td>—</td></tr>
-            <tr class="inbound-row" onclick="openCallDrawer()"><td>+66 89 876 5432</td><td>AIS Line 2</td><td>14 May 2026  09:30</td><td>0m 48s</td><td><span class="status status-noanswer">No Answer</span></td><td>—</td><td>—</td></tr>
-            <tr class="inbound-row" onclick="openCallDrawer()"><td>+66 89 876 5432</td><td>AIS Line 2</td><td>14 May 2026  09:30</td><td>0m 48s</td><td><span class="status status-noanswer">No Answer</span></td><td>—</td><td>—</td></tr>
-            <tr class="inbound-row" onclick="openCallDrawer()"><td>+66 89 876 5432</td><td>AIS Line 2</td><td>14 May 2026  09:30</td><td>0m 48s</td><td><span class="status status-noanswer">No Answer</span></td><td>—</td><td>—</td></tr>
-            <tr class="inbound-row" onclick="openCallDrawer()"><td>+66 89 876 5432</td><td>AIS Line 2</td><td>14 May 2026  09:30</td><td>0m 48s</td><td><span class="status status-noanswer">No Answer</span></td><td>—</td><td>—</td></tr>
-
-            <!-- ── Skeleton placeholder rows ── -->
-            <tr class="skeleton-row">
-              <td><div class="skeleton-line" style="width:120px;"></div></td>
-              <td><div class="skeleton-line" style="width:80px;"></div></td>
-              <td><div class="skeleton-line" style="width:110px;"></div></td>
-              <td><div class="skeleton-line" style="width:44px;"></div></td>
-              <td><div class="skeleton-pill"></div></td>
-              <td><div class="skeleton-pill" style="width:90px;"></div></td>
-              <td><div class="skeleton-pill" style="width:60px;"></div></td>
-            </tr>
-            <tr class="skeleton-row">
-              <td><div class="skeleton-line" style="width:130px;"></div></td>
-              <td><div class="skeleton-line" style="width:95px;"></div></td>
-              <td><div class="skeleton-line" style="width:110px;"></div></td>
-              <td><div class="skeleton-line" style="width:44px;"></div></td>
-              <td><div class="skeleton-pill"></div></td>
-              <td><div class="skeleton-line" style="width:16px;"></div></td>
-              <td><div class="skeleton-line" style="width:16px;"></div></td>
-            </tr>
-            <tr class="skeleton-row">
-              <td><div class="skeleton-line" style="width:115px;"></div></td>
-              <td><div class="skeleton-line" style="width:75px;"></div></td>
-              <td><div class="skeleton-line" style="width:110px;"></div></td>
-              <td><div class="skeleton-line" style="width:44px;"></div></td>
-              <td><div class="skeleton-pill"></div></td>
-              <td><div class="skeleton-pill" style="width:100px;"></div></td>
-              <td><div class="skeleton-pill" style="width:72px;"></div></td>
-            </tr>
-            <tr class="skeleton-row">
-              <td><div class="skeleton-line" style="width:120px;"></div></td>
-              <td><div class="skeleton-line" style="width:80px;"></div></td>
-              <td><div class="skeleton-line" style="width:110px;"></div></td>
-              <td><div class="skeleton-line" style="width:44px;"></div></td>
-              <td><div class="skeleton-pill"></div></td>
-              <td><div class="skeleton-pill" style="width:90px;"></div></td>
-              <td><div class="skeleton-pill" style="width:60px;"></div></td>
-            </tr>
-            <tr class="skeleton-row">
-              <td><div class="skeleton-line" style="width:130px;"></div></td>
-              <td><div class="skeleton-line" style="width:95px;"></div></td>
-              <td><div class="skeleton-line" style="width:110px;"></div></td>
-              <td><div class="skeleton-line" style="width:44px;"></div></td>
-              <td><div class="skeleton-pill"></div></td>
-              <td><div class="skeleton-line" style="width:16px;"></div></td>
-              <td><div class="skeleton-line" style="width:16px;"></div></td>
-            </tr>
-            <tr class="skeleton-row">
-              <td><div class="skeleton-line" style="width:120px;"></div></td>
-              <td><div class="skeleton-line" style="width:80px;"></div></td>
-              <td><div class="skeleton-line" style="width:110px;"></div></td>
-              <td><div class="skeleton-line" style="width:44px;"></div></td>
-              <td><div class="skeleton-pill"></div></td>
-              <td><div class="skeleton-pill" style="width:90px;"></div></td>
-              <td><div class="skeleton-pill" style="width:60px;"></div></td>
-            </tr>
-            <tr class="skeleton-row">
-              <td><div class="skeleton-line" style="width:130px;"></div></td>
-              <td><div class="skeleton-line" style="width:95px;"></div></td>
-              <td><div class="skeleton-line" style="width:110px;"></div></td>
-              <td><div class="skeleton-line" style="width:44px;"></div></td>
-              <td><div class="skeleton-pill"></div></td>
-              <td><div class="skeleton-line" style="width:16px;"></div></td>
-              <td><div class="skeleton-line" style="width:16px;"></div></td>
-            </tr>
-
-          </tbody>
+          <!-- inbound table render -->
+          <thead><tr><th>Caller Number</th><th>Client Line</th><th>Date &amp; Time</th><th>Duration</th><th>Connection</th><th>Final Intent</th><th>Resolution Status</th></tr></thead>
+          <tbody id="inbound-tbody"></tbody>
         </table>
       </div>
     </div>
@@ -406,27 +321,31 @@
         </div>
 
         <div class="chart-box">
-          <div class="chart-box-header">🏷️ Final Intention Breakdown (May) <span class="chart-sub"></span></div>
-          <div style="padding:14px 20px 18px;display:flex;flex-direction:column;gap:12px;">
+          <div class="chart-box-header">🏷️ Final Intent Breakdown (May) <span class="chart-sub">All inbound calls</span></div>
+          <div style="padding:14px 20px 18px;display:flex;flex-direction:column;gap:11px;">
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px;color:#6b7280;"><span><span class="tag tag-A">A</span>&nbsp; Agreed to Pay</span><span style="color:#1a1a2e;font-weight:800;">28.4%</span></div>
-              <div class="progress-bar" style="max-width:100%;height:6px;"><div class="progress-fill" style="width:28.4%;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px;color:#6b7280;"><span><span class="intent-tag intent-ekyc" style="font-size:10px;padding:2px 7px;">TAG_PROBLEM_OPENACCOUNT</span></span><span style="color:#1a1a2e;font-weight:800;">31.2%</span></div>
+              <div class="progress-bar" style="max-width:100%;height:6px;"><div class="progress-fill" style="width:31.2%;background:#7c3aed;"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px;color:#6b7280;"><span><span class="tag tag-B">B</span>&nbsp; Callback Request</span><span style="color:#1a1a2e;font-weight:800;">18.7%</span></div>
-              <div class="progress-bar" style="max-width:100%;height:6px;"><div class="progress-fill" style="width:18.7%;background:#b0b0b0;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px;color:#6b7280;"><span><span class="intent-tag intent-ndid" style="font-size:10px;padding:2px 7px;">TAG_PROBLEM_NDID</span></span><span style="color:#1a1a2e;font-weight:800;">22.4%</span></div>
+              <div class="progress-bar" style="max-width:100%;height:6px;"><div class="progress-fill" style="width:22.4%;background:#ea580c;"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px;color:#6b7280;"><span><span class="tag tag-C">C</span>&nbsp; Negotiation</span><span style="color:#1a1a2e;font-weight:800;">14.2%</span></div>
-              <div class="progress-bar" style="max-width:100%;height:6px;"><div class="progress-fill" style="width:14.2%;background:#c8c8c8;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px;color:#6b7280;"><span><span class="intent-tag intent-ekyc" style="font-size:10px;padding:2px 7px;">TAG_FACESCAN_PROBLEM</span></span><span style="color:#1a1a2e;font-weight:800;">15.8%</span></div>
+              <div class="progress-bar" style="max-width:100%;height:6px;"><div class="progress-fill" style="width:15.8%;background:#7c3aed;opacity:0.6;"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px;color:#6b7280;"><span><span class="tag tag-D">D</span>&nbsp; Refused / Hang-up</span><span style="color:#1a1a2e;font-weight:800;">22.1%</span></div>
-              <div class="progress-bar" style="max-width:100%;height:6px;"><div class="progress-fill" style="width:22.1%;background:#d8d8d8;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px;color:#6b7280;"><span><span class="intent-tag intent-inquiry" style="font-size:10px;padding:2px 7px;">TAG_INQUIRY_ACCOUNT</span></span><span style="color:#1a1a2e;font-weight:800;">16.5%</span></div>
+              <div class="progress-bar" style="max-width:100%;height:6px;"><div class="progress-fill" style="width:16.5%;background:#0284c7;"></div></div>
             </div>
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px;color:#6b7280;"><span><span class="tag tag-E">E–I</span>&nbsp; Other Outcomes</span><span style="color:#1a1a2e;font-weight:800;">16.6%</span></div>
-              <div class="progress-bar" style="max-width:100%;height:6px;"><div class="progress-fill" style="width:16.6%;background:#e8e8e8;"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px;color:#6b7280;"><span><span class="intent-tag intent-dipchip" style="font-size:10px;padding:2px 7px;">DIPCHIP_SEARCHLOC</span></span><span style="color:#1a1a2e;font-weight:800;">8.3%</span></div>
+              <div class="progress-bar" style="max-width:100%;height:6px;"><div class="progress-fill" style="width:8.3%;background:#059669;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px;color:#6b7280;"><span><span class="intent-tag intent-faq" style="font-size:10px;padding:2px 7px;">Other Intents</span></span><span style="color:#1a1a2e;font-weight:800;">5.8%</span></div>
+              <div class="progress-bar" style="max-width:100%;height:6px;"><div class="progress-fill" style="width:5.8%;background:#b0b0b0;"></div></div>
             </div>
           </div>
         </div>
@@ -436,7 +355,7 @@
       <div class="table-wrap">
         <div class="table-toolbar">
           <select class="search-input" style="width:150px;cursor:pointer;">
-            <option>All Clients</option><option>AIS</option><option>SCB Bank</option><option>True Move</option>
+            <option>All Clients</option><option>AIS</option><option>SCB Bank</option><option>AIS</option>
           </select>
           <input type="date" class="search-input" style="width:140px;" value="2026-05-01"/>
           <span style="color:#b0b0b0;font-size:12px;">to</span>
@@ -484,8 +403,8 @@
       <div class="client-card">
         <div class="client-avatar" style="background:#f0faf4;">🏦</div>
         <div class="client-info">
-          <div class="cname">SCB Bank <span class="tag tag-A" style="margin-left:8px;font-size:10px;">Active</span></div>
-          <div class="cdetail">ops@scb.co.th &nbsp;·&nbsp; 1 Caller Line &nbsp;·&nbsp; 1 Active Task</div>
+          <div class="cname">AIS <span class="tag tag-A" style="margin-left:8px;font-size:10px;">Active</span></div>
+          <div class="cdetail">ops@AIS.co.th &nbsp;·&nbsp; 1 Caller Line &nbsp;·&nbsp; 1 Active Task</div>
         </div>
         <div class="client-stats">
           <div class="client-stat"><div class="sv">15</div><div class="sl">Total Tasks</div></div>
@@ -497,7 +416,7 @@
         <div class="client-avatar" style="background:#f5f0ff;">📡</div>
         <div class="client-info">
           <div class="cname">AIS <span class="tag tag-A" style="margin-left:8px;font-size:10px;">Active</span></div>
-          <div class="cdetail">tech@truemove.th &nbsp;·&nbsp; 2 Caller Lines &nbsp;·&nbsp; 1 Active Task</div>
+          <div class="cdetail">tech@AIS.th &nbsp;·&nbsp; 2 Caller Lines &nbsp;·&nbsp; 1 Active Task</div>
         </div>
         <div class="client-stats">
           <div class="client-stat"><div class="sv">22</div><div class="sl">Total Tasks</div></div>
@@ -542,7 +461,7 @@
             <tr><td>Debt Reminder v3</td><td>Debt Collection</td><td>Thai</td><td>AIS</td><td>12</td><td><span class="status status-running">Active</span></td><td><button class="action-btn action-btn-view">Edit</button></td></tr>
             <tr><td>Upsell Package B</td><td>Upsell</td><td>Thai</td><td>AIS</td><td>8</td><td><span class="status status-running">Active</span></td><td><button class="action-btn action-btn-view">Edit</button></td></tr>
             <tr><td>Appointment v2</td><td>Appointment</td><td>Thai/EN</td><td>SCB Bank</td><td>6</td><td><span class="status status-running">Active</span></td><td><button class="action-btn action-btn-view">Edit</button></td></tr>
-            <tr><td>Survey v1</td><td>Survey</td><td>Thai</td><td>True Move</td><td>3</td><td><span class="status status-paused">Draft</span></td><td><button class="action-btn action-btn-view">Edit</button></td></tr>
+            <tr><td>Survey v1</td><td>Survey</td><td>Thai</td><td>AIS</td><td>3</td><td><span class="status status-paused">Draft</span></td><td><button class="action-btn action-btn-view">Edit</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -555,7 +474,7 @@
             <tr><td>AIS Line 1</td><td>+66 2 000 0001</td><td>AIS</td><td>2</td><td><span class="status status-running">In Use</span></td></tr>
             <tr><td>AIS Line 2</td><td>+66 2 000 0002</td><td>AIS</td><td>1</td><td><span class="status status-running">In Use</span></td></tr>
             <tr><td>SCB Line 1</td><td>+66 2 000 0011</td><td>SCB Bank</td><td>0</td><td><span class="status status-pending">Idle</span></td></tr>
-            <tr><td>True Line 1</td><td>+66 2 000 0021</td><td>True Move</td><td>1</td><td><span class="status status-running">In Use</span></td></tr>
+            <tr><td>AIS Line 1</td><td>+66 2 000 0021</td><td>AIS</td><td>1</td><td><span class="status status-running">In Use</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -611,7 +530,7 @@
           <div style="font-size:11px;font-weight:700;color:#b0b0b0;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Outcome Breakdown</div>
           <div style="display:flex;flex-direction:column;gap:10px;">
             <div><div style="display:flex;justify-content:space-between;font-size:12px;color:#6b7280;font-weight:600;margin-bottom:5px;"><span>Connected</span><span style="color:#1a1a2e;font-weight:800;">25,612 (71.2%)</span></div><div class="progress-bar" style="max-width:100%;"><div class="progress-fill" style="width:71.2%;"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;font-size:12px;color:#6b7280;font-weight:600;margin-bottom:5px;"><span>No Answer</span><span style="color:#1a1a2e;font-weight:800;">6,840 (19.0%)</span></div><div class="progress-bar" style="max-width:100%;"><div class="progress-fill" style="width:19%;background:#c8c8c8;"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12px;color:#6b7280;font-weight:600;margin-bottom:5px;"><span>Hung Up</span><span style="color:#1a1a2e;font-weight:800;">6,840 (19.0%)</span></div><div class="progress-bar" style="max-width:100%;"><div class="progress-fill" style="width:19%;background:#c8c8c8;"></div></div></div>
             <div><div style="display:flex;justify-content:space-between;font-size:12px;color:#6b7280;font-weight:600;margin-bottom:5px;"><span>Busy</span><span style="color:#1a1a2e;font-weight:800;">2,880 (8.0%)</span></div><div class="progress-bar" style="max-width:100%;"><div class="progress-fill" style="width:8%;background:#d8d8d8;"></div></div></div>
             <div><div style="display:flex;justify-content:space-between;font-size:12px;color:#6b7280;font-weight:600;margin-bottom:5px;"><span>Transferred</span><span style="color:#1a1a2e;font-weight:800;">428 (1.2%)</span></div><div class="progress-bar" style="max-width:100%;"><div class="progress-fill" style="width:1.2%;background:#e8e8e8;"></div></div></div>
           </div>
@@ -638,12 +557,14 @@
 
     <div class="tab-content" id="tab-completed">
       <table>
-        <thead><tr><th>Phone Number</th><th>Outcome</th><th>Duration</th><th>Final Intention</th><th>Payment Status</th><th>Completed</th></tr></thead>
+        <thead><tr><th>Phone Number</th><th>Outcome</th><th>Duration</th><th>Final Intent</th><th>Resolution Status</th><th>Completed</th></tr></thead>
         <tbody>
-          <tr><td>+66 81 111 2222</td><td><span class="status status-connected">Connected</span></td><td>2m 14s</td><td><span class="tag tag-A">A — Agree</span></td><td><span class="tag tag-B">Paid</span></td><td>14:28:40</td></tr>
-          <tr><td>+66 89 333 4444</td><td><span class="status status-noanswer">No Answer</span></td><td>—</td><td>—</td><td>—</td><td>14:28:55</td></tr>
-          <tr><td>+66 92 555 6666</td><td><span class="status status-connected">Connected</span></td><td>3m 02s</td><td><span class="tag tag-C">C — Negotiation</span></td><td><span class="tag tag-D">Pending</span></td><td>14:29:10</td></tr>
-          <tr><td>+66 85 777 8888</td><td><span class="status status-transfer">Transferred</span></td><td>1m 37s</td><td><span class="tag tag-B">B — Callback</span></td><td><span class="tag tag-E">Instalment</span></td><td>14:29:30</td></tr>
+          <tr><td>+66 81 111 2222</td><td><span class="status status-connected">Connected</span></td><td>2m 14s</td><td><span class="intent-tag intent-ekyc">TAG_PROBLEM_OPENACCOUNT</span></td><td><span class="res-tag res-transferred">Transferred</span></td><td>14:28:40</td></tr>
+          <tr><td>+66 89 333 4444</td><td><span class="status status-noanswer">Hung Up</span></td><td>—</td><td>—</td><td>—</td><td>14:28:55</td></tr>
+          <tr><td>+66 92 555 6666</td><td><span class="status status-connected">Connected</span></td><td>3m 02s</td><td><span class="intent-tag intent-ndid">TAG_PROBLEM_NDID</span></td><td><span class="res-tag res-resolved">Resolved</span></td><td>14:29:10</td></tr>
+          <tr><td>+66 85 777 8888</td><td><span class="status status-transfer">Transferred</span></td><td>1m 37s</td><td><span class="intent-tag intent-ekyc">TAG_FACESCAN_PROBLEM</span></td><td><span class="res-tag res-escalated">Escalated</span></td><td>14:29:30</td></tr>
+          <tr><td>+66 94 321 0099</td><td><span class="status status-connected">Connected</span></td><td>1m 52s</td><td><span class="intent-tag intent-inquiry">TAG_INQUIRY_ACCOUNT</span></td><td><span class="res-tag res-resolved">Resolved</span></td><td>14:30:05</td></tr>
+          <tr><td>+66 91 008 2255</td><td><span class="status status-connected">Connected</span></td><td>1m 14s</td><td><span class="intent-tag intent-faq">FAQ_CLICXAPP_REGISTRATION</span></td><td><span class="res-tag res-resolved">Resolved</span></td><td>14:31:20</td></tr>
         </tbody>
       </table>
     </div>
@@ -651,19 +572,25 @@
     <div class="tab-content" id="tab-callrecords">
       <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
         <input class="search-input" placeholder="🔍  Search by number…" style="width:200px;"/>
-        <select class="search-input" style="width:140px;cursor:pointer;">
-          <option>All Outcomes</option><option>Connected</option><option>No Answer</option><option>Busy</option><option>Transferred</option>
+        <select class="search-input" style="width:160px;cursor:pointer;">
+          <option>All Intents</option>
+          <option>TAG_PROBLEM_OPENACCOUNT</option>
+          <option>TAG_PROBLEM_NDID</option>
+          <option>TAG_FACESCAN_PROBLEM</option>
+          <option>TAG_INQUIRY_ACCOUNT</option>
+          <option>DIPCHIP_SEARCHLOC</option>
         </select>
         <div style="flex:1;"></div>
         <button class="btn btn-outline btn-sm">⬇ Export</button>
       </div>
       <table>
-        <thead><tr><th>Call ID</th><th>Phone</th><th>Time</th><th>Duration</th><th>Outcome</th><th>Intention</th><th>Node</th></tr></thead>
+        <thead><tr><th>Call ID</th><th>Phone</th><th>Time</th><th>Duration</th><th>Outcome</th><th>Final Intent</th><th>Resolution</th></tr></thead>
         <tbody>
-          <tr><td style="color:#b0b0b0;font-size:11px;">#29841</td><td>+66 81 111 2222</td><td>14:28:40</td><td>2m 14s</td><td><span class="status status-connected">Connected</span></td><td><span class="tag tag-A">A</span></td><td>Node 3</td></tr>
-          <tr><td style="color:#b0b0b0;font-size:11px;">#29842</td><td>+66 89 333 4444</td><td>14:28:55</td><td>—</td><td><span class="status status-noanswer">No Answer</span></td><td>—</td><td>—</td></tr>
-          <tr><td style="color:#b0b0b0;font-size:11px;">#29843</td><td>+66 92 555 6666</td><td>14:29:10</td><td>3m 02s</td><td><span class="status status-connected">Connected</span></td><td><span class="tag tag-C">C</span></td><td>Node 5</td></tr>
-          <tr><td style="color:#b0b0b0;font-size:11px;">#29844</td><td>+66 85 777 8888</td><td>14:29:30</td><td>1m 37s</td><td><span class="status status-transfer">Transferred</span></td><td><span class="tag tag-B">B</span></td><td>Node 4</td></tr>
+          <tr><td style="color:#b0b0b0;font-size:11px;">#29841</td><td>+66 81 111 2222</td><td>14:28:40</td><td>2m 14s</td><td><span class="status status-connected">Connected</span></td><td><span class="intent-tag intent-ekyc">TAG_PROBLEM_OPENACCOUNT</span></td><td><span class="res-tag res-transferred">Transferred</span></td></tr>
+          <tr><td style="color:#b0b0b0;font-size:11px;">#29842</td><td>+66 89 333 4444</td><td>14:28:55</td><td>—</td><td><span class="status status-noanswer">Hung Up</span></td><td>—</td><td>—</td></tr>
+          <tr><td style="color:#b0b0b0;font-size:11px;">#29843</td><td>+66 92 555 6666</td><td>14:29:10</td><td>3m 02s</td><td><span class="status status-connected">Connected</span></td><td><span class="intent-tag intent-ndid">TAG_PROBLEM_NDID</span></td><td><span class="res-tag res-resolved">Resolved</span></td></tr>
+          <tr><td style="color:#b0b0b0;font-size:11px;">#29844</td><td>+66 85 777 8888</td><td>14:29:30</td><td>1m 37s</td><td><span class="status status-transfer">Transferred</span></td><td><span class="intent-tag intent-ekyc">TAG_FACESCAN_PROBLEM</span></td><td><span class="res-tag res-escalated">Escalated</span></td></tr>
+          <tr><td style="color:#b0b0b0;font-size:11px;">#29845</td><td>+66 94 321 0099</td><td>14:30:05</td><td>1m 52s</td><td><span class="status status-connected">Connected</span></td><td><span class="intent-tag intent-dipchip">DIPCHIP_SEARCHLOC</span></td><td><span class="res-tag res-resolved">Resolved</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -767,12 +694,12 @@
     <div class="drawer-header-left">
       <div class="drawer-icon">📲</div>
       <div>
-        <div class="drawer-title">+66 81 234 5678</div>
-        <div class="drawer-sub">AIS Line 1 &nbsp;·&nbsp; 14 May 2026, 09:12 &nbsp;·&nbsp; 2m 14s</div>
+        <div class="drawer-title" id="drawer-caller-title">+66 81 234 5678</div>
+        <div class="drawer-sub" id="drawer-sub">AIS Line 1 &nbsp;·&nbsp; 14 May 2026, 09:12 &nbsp;·&nbsp; 2m 14s</div>
       </div>
     </div>
     <div class="drawer-header-right">
-      <span class="status status-connected">Connected</span>
+      <span class="status status-connected" id="drawer-connection-badge">Connected</span>
       <button class="modal-close" onclick="closeCallDrawer()">✕</button>
     </div>
   </div>
@@ -783,7 +710,7 @@
     <!-- LEFT: Chat Transcript -->
     <div class="drawer-chat">
       <div class="drawer-chat-title">AI Conversation Transcript</div>
-      <div class="chat-thread">
+      <div class="chat-thread" id="drawer-chat-thread">
 
         <div class="chat-msg bot">
           <div class="chat-avatar bot-avatar">🤖</div>
@@ -921,9 +848,8 @@
           </div>
         </div>
 
-        <div class="chat-system-note">🏁 Call ended — Final Intention: <strong>C — Negotiation / Follow-up</strong></div>
-
       </div>
+      <div class="chat-system-note" id="drawer-chat-end-note">🏁 Call ended — Final Intent: <strong>TAG_PROBLEM_OPENACCOUNT</strong> · Resolution: <strong>Transferred</strong></div>
     </div>
 
     <!-- RIGHT: Call Detail -->
@@ -932,48 +858,47 @@
 
       <div class="detail-section">
         <div class="detail-label">CALLER</div>
-        <div class="detail-value">+66 81 234 5678</div>
-        <div class="detail-sub">Unknown contact</div>
+        <div class="detail-value" id="drawer-detail-caller">+66 81 234 5678</div>
       </div>
 
       <div class="detail-section">
         <div class="detail-label">CLIENT LINE</div>
-        <div class="detail-value">AIS Line 1</div>
-        <div class="detail-sub">+66 2 000 0001</div>
+        <div class="detail-value" id="drawer-detail-line">AIS Line 1</div>
       </div>
 
       <div class="detail-section">
         <div class="detail-label">DATE &amp; TIME</div>
-        <div class="detail-value">14 May 2026</div>
-        <div class="detail-sub">09:12 – 09:14</div>
+        <div class="detail-value" id="drawer-detail-datetime">14 May 2026, 09:12</div>
       </div>
 
       <div class="detail-section">
         <div class="detail-label">DURATION</div>
-        <div class="detail-value">2m 14s</div>
+        <div class="detail-value" id="drawer-detail-duration">2m 14s</div>
       </div>
 
       <div class="detail-section">
         <div class="detail-label">CONNECTION</div>
-        <div class="detail-value"><span class="status status-connected">Connected</span></div>
+        <div class="detail-value" id="drawer-detail-connection"><span class="status status-connected">Connected</span></div>
       </div>
 
       <div class="detail-divider"></div>
 
       <div class="detail-section">
-        <div class="detail-label">FINAL INTENTION</div>
-        <div class="detail-value"><span class="tag tag-A" style="font-size:13px;padding:4px 12px;">A — Agree</span></div>
+        <div class="detail-label">FINAL INTENT</div>
+        <div class="detail-value" id="drawer-detail-intent"><span class="intent-tag intent-ekyc">TAG_PROBLEM_OPENACCOUNT</span></div>
+        <div class="detail-sub" id="drawer-detail-intent-sub">สมัครเปิดบัญชีเงินฝากไม่ผ่าน</div>
       </div>
 
       <div class="detail-section">
-        <div class="detail-label">PAYMENT STATUS</div>
-        <div class="detail-value"><span class="tag tag-B" style="font-size:13px;padding:4px 12px;">Paid</span></div>
+        <div class="detail-label">RESOLUTION STATUS</div>
+        <div class="detail-value" id="drawer-detail-resolution"><span class="res-tag res-transferred">Transferred</span></div>
+        <div class="detail-sub" id="drawer-detail-resolution-sub">โอนสายให้เจ้าหน้าที่ต่อ</div>
       </div>
 
       <div class="detail-section">
         <div class="detail-label">LINKED TASK</div>
-        <div class="detail-value" style="font-size:13px;color:#00a651;cursor:pointer;">Debt Collection Q2 2026</div>
-        <div class="detail-sub">ORD-2341 · AIS</div>
+        <div class="detail-value" id="drawer-detail-linked-task" style="font-size:13px;color:#00a651;cursor:pointer;">Account Opening Campaign</div>
+        <div class="detail-sub" id="drawer-detail-linked-sub">ORD-2341</div>
       </div>
 
       <div class="detail-divider"></div>
@@ -1035,6 +960,7 @@
   </div>
 </div>
 
+<script src="data/inbound_calls.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
