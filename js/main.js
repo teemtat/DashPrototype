@@ -26,7 +26,7 @@ const seedTasks = [
   },
   {
     id: 'ORD-2343', name: 'True Move Renewal',
-    client: 'True Move H', dialogue: 'Package Renewal v1', callerLine: 'True Line 1',
+    client: 'AIS', dialogue: 'Package Renewal v1', callerLine: 'True Line 1',
     contacts: 20000, workDays: 'Monday – Friday', workStart: '09:00', workEnd: '17:00',
     maxRetries: '2', retryInterval: '1 hour',
     contactFile: 'truemove_renewal.xlsx', dncFile: null,
@@ -53,7 +53,7 @@ const seedTasks = [
   },
   {
     id: 'ORD-2346', name: 'Survey Campaign May',
-    client: 'True Move H', dialogue: 'Survey v1', callerLine: 'True Line 1',
+    client: 'AIS', dialogue: 'Survey v1', callerLine: 'True Line 1',
     contacts: null, workDays: 'Monday – Friday', workStart: '09:00', workEnd: '17:00',
     maxRetries: '1', retryInterval: '30 min',
     contactFile: null, dncFile: null,
