@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SunSystem — Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: #f5f5f7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Card ── */
+    .login-card {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid #ebebeb;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+      width: 100%;
+      max-width: 400px;
+      padding: 40px 36px 32px;
+    }
+
+    /* ── Logo ── */
+    .login-logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .login-logo img {
+      width: 120px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    /* ── Heading ── */
+    .login-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1a1a2e;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .login-sub {
+      font-size: 13px;
+      color: #b0b0b0;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    /* ── Form ── */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .form-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #6b7280;
+    }
+    .form-input {
+      border: 1px solid #e8e8e8;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      background: #fafafa;
+      color: #1a1a2e;
+      transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+    .form-input:focus {
+      border-color: #00a651;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(0,166,81,0.10);
+    }
+    .form-input::placeholder { color: #c0c0c0; }
+
+    /* ── Error ── */
+    .login-error {
+      display: none;
+      background: #fff5f5;
+      border: 1px solid #fecaca;
+      border-radius: 9px;
+      padding: 9px 13px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #b91c1c;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .login-error.show { display: block; }
+
+    /* ── Submit button ── */
+    .btn-login {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      border: none;
+      background: #00a651;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 4px;
+    }
+    .btn-login:hover  { background: #008a43; }
+    .btn-login:active { transform: scale(0.99); }
+    .btn-login:disabled { background: #b0e0c8; cursor: not-allowed; }
+
+    /* ── Demo accounts hint ── */
+    .demo-hint {
+      margin-top: 24px;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 18px;
+    }
+    .demo-hint-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #c0c0c0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .demo-accounts {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .demo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: #fafafa;
+      border: 1px solid #f0f0f0;
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .demo-row:hover { background: #f0faf5; border-color: #b8e6cf; }
+    .demo-role-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-superadmin { background: #f5f0ff; color: #6d28d9; }
+    .badge-admin      { background: #f0faf5; color: #00a651; }
+    .badge-supervisor { background: #eff6ff; color: #1d4ed8; }
+    .badge-agent      { background: #fff8f0; color: #e65100; }
+    .demo-creds {
+      font-size: 11px;
+      color: #9e9e9e;
+      font-weight: 500;
+    }
+    .demo-creds strong { color: #424242; font-weight: 700; }
+    .demo-fill-hint {
+      margin-left: auto;
+      font-size: 10px;
+      color: #c0c0c0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-card">
+
+  <div class="login-logo">
+    <img src="img/Logo.png" alt="SunSystem" />
+  </div>
+
+  <h1 class="login-title">Welcome back</h1>
+  <p class="login-sub">Sign in to your SunSystem account</p>
+
+  <div class="login-error" id="login-error"></div>
+
+  <div class="form-group">
+    <label class="form-label" for="input-username">Username</label>
+    <input id="input-username" class="form-input" type="text" placeholder="Enter your username" autocomplete="username" />
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="input-password">Password</label>
+    <input id="input-password" class="form-input" type="password" placeholder="Enter your password" autocomplete="current-password" />
+  </div>
+
+  <button class="btn-login" id="btn-login" onclick="doLogin()">Sign in</button>
+
+  <div class="demo-hint">
+    <div class="demo-hint-title">Demo Accounts — click to fill</div>
+    <div class="demo-accounts">
+      <div class="demo-row" onclick="fillDemo('superadmin','1234')">
+        <span class="demo-role-badge badge-superadmin">Super Admin</span>
+        <span class="demo-creds"><strong>superadmin</strong> / 1234</span>
+        <span class="demo-fill-hint">↑ fill</span>
+      </div>
+      <div class="demo-row" onclick="fillDemo('admin','1234')">
+        <span class="demo-role-badge badge-admin">Admin</span>
+        <span class="demo-creds"><strong>admin</strong> / 1234</span>
+        <span class="demo-fill-hint">↑ fill</span>
+      </div>
+      <div class="demo-row" onclick="fillDemo('supervisor','1234')">
+        <span class="demo-role-badge badge-supervisor">Supervisor</span>
+        <span class="demo-creds"><strong>supervisor</strong> / 1234</span>
+        <span class="demo-fill-hint">↑ fill</span>
+      </div>
+      <div class="demo-row" onclick="fillDemo('agent','1234')">
+        <span class="demo-role-badge badge-agent">Agent</span>
+        <span class="demo-creds"><strong>agent</strong> / 1234</span>
+        <span class="demo-fill-hint">↑ fill</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="data/users.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  // If already logged in, skip to dashboard
+  if (Auth_getCurrentUser()) window.location.href = 'index.html';
+
+  function fillDemo(username, password) {
+    document.getElementById('input-username').value = username;
+    document.getElementById('input-password').value = password;
+    document.getElementById('login-error').classList.remove('show');
+  }
+
+  function doLogin() {
+    const username = document.getElementById('input-username').value.trim();
+    const password = document.getElementById('input-password').value;
+    const errorEl  = document.getElementById('login-error');
+    const btnEl    = document.getElementById('btn-login');
+
+    if (!username || !password) {
+      errorEl.textContent = 'Please enter your username and password.';
+      errorEl.classList.add('show');
+      return;
+    }
+
+    btnEl.disabled = true;
+    btnEl.textContent = 'Signing in…';
+
+    // Small delay to feel natural
+    setTimeout(() => {
+      const result = Auth_login(username, password);
+      if (result.ok) {
+        window.location.href = 'index.html';
+      } else {
+        errorEl.textContent = result.error;
+        errorEl.classList.add('show');
+        btnEl.disabled = false;
+        btnEl.textContent = 'Sign in';
+      }
+    }, 400);
+  }
+
+  // Allow Enter key to submit
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') doLogin();
+  });
+</script>
+
+</body>
+</html>

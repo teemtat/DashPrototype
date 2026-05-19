@@ -16,22 +16,23 @@
 
   <div class="nav-section-label">Main Menu</div>
 
-  <div class="nav-item active" onclick="showScreen('dashboard', this)"> Dashboard </div>
-  <div class="nav-item" onclick="showScreen('tasks', this)"> Outbound Tasks <span class="nav-badge" id="nav-running-count">0</span> </div>
-  <div class="nav-item" onclick="showScreen('inbound', this)"> Inbound Calls</div>
-  <div class="nav-item" onclick="showScreen('reports', this)"> Reports</div>
+  <div class="nav-item active" data-screen="dashboard" onclick="showScreen('dashboard', this)"> Dashboard </div>
+  <div class="nav-item" data-screen="tasks" onclick="showScreen('tasks', this)"> Outbound Tasks <span class="nav-badge" id="nav-running-count">0</span> </div>
+  <div class="nav-item" data-screen="inbound" onclick="showScreen('inbound', this)"> Inbound Calls</div>
+  <div class="nav-item" data-screen="reports" onclick="showScreen('reports', this)"> Reports</div>
 
   <div class="nav-section-label">Admin</div>
-  <div class="nav-item" onclick="showScreen('clients', this)"> Client Accounts </div>
-  <div class="nav-item" onclick="showScreen('settings', this)"> System Settings </div>
+  <div class="nav-item" data-screen="clients" onclick="showScreen('clients', this)"> Client Accounts </div>
+  <div class="nav-item" data-screen="settings" onclick="showScreen('settings', this)"> System Settings </div>
+  <div class="nav-item" data-screen="users" onclick="showScreen('users', this)"> User Management </div>
 
-  <div class="sidebar-footer">
-    <div class="user-avatar">A</div>
+  <div class="sidebar-footer" onclick="Auth_logout()">
+    <div class="user-avatar" id="sidebar-user-avatar">A</div>
     <div class="user-info">
-      <div class="uname">Admin User</div>
-      <div class="urole">SunSystem Team</div>
+      <div class="uname" id="sidebar-user-name">Admin User</div>
+      <div class="urole" id="sidebar-user-role">Admin</div>
     </div>
-    <span class="logout-icon">↪</span>
+    <span class="logout-icon" title="Logout">↪</span>
   </div>
 </aside>
 
@@ -439,6 +440,201 @@
     </div>
 
     <!-- ════════════════════════════════════
+         SCREEN: USER MANAGEMENT
+    ════════════════════════════════════ -->
+    <div class="screen" id="screen-users">
+      <div class="breadcrumb">Admin → <span>User Management</span></div>
+
+      <div class="health-grid" style="grid-template-columns: repeat(3,1fr);">
+        <div class="health-card"><div class="hc-label">Total Users</div><div class="hc-val" id="users-kpi-total">—</div></div>
+        <div class="health-card"><div class="hc-label">Active</div><div class="hc-val hc-ok" id="users-kpi-active">—</div></div>
+        <div class="health-card"><div class="hc-label">Inactive</div><div class="hc-val hc-warn" id="users-kpi-inactive">—</div></div>
+      </div>
+
+      <div class="section-header">
+        <h3>Users</h3>
+        <div class="spacer"></div>
+        <button class="btn btn-primary btn-sm" onclick="Users_openAdd()">+ Add User</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+          <tbody id="users-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Role Permissions Reference -->
+      <div class="section-header" style="margin-top:8px;">
+        <h3>Role Permissions</h3>
+        <div class="spacer"></div>
+        <span style="font-size:11px;color:#b0b0b0;font-weight:500;">What each role can access and do</span>
+      </div>
+
+      <div class="perm-matrix-wrap">
+
+        <!-- Role header cards -->
+        <div class="perm-role-headers">
+          <div class="perm-feature-col"></div>
+          <div class="perm-role-card role-card-superadmin">
+            <span class="role-badge role-superadmin">Super Admin</span>
+            <p>Full access to everything including user management</p>
+          </div>
+          <div class="perm-role-card role-card-admin">
+            <span class="role-badge role-admin">Admin</span>
+            <p>Full access except managing other users</p>
+          </div>
+          <div class="perm-role-card role-card-supervisor">
+            <span class="role-badge role-supervisor">Supervisor</span>
+            <p>Can monitor tasks and calls, view reports</p>
+          </div>
+          <div class="perm-role-card role-card-agent">
+            <span class="role-badge role-agent">Agent</span>
+            <p>Inbound calls only — no admin access</p>
+          </div>
+        </div>
+
+        <!-- Permission rows -->
+        <div class="perm-row perm-row-group-label">
+          <div class="perm-feature-col">Pages</div>
+          <div></div><div></div><div></div><div></div>
+        </div>
+
+        <div class="perm-row">
+          <div class="perm-feature-col">Dashboard</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+        <div class="perm-row">
+          <div class="perm-feature-col">Outbound Tasks</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+        <div class="perm-row">
+          <div class="perm-feature-col">Inbound Calls</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+        </div>
+        <div class="perm-row">
+          <div class="perm-feature-col">Reports</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+        <div class="perm-row">
+          <div class="perm-feature-col">Client Accounts</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+        <div class="perm-row">
+          <div class="perm-feature-col">System Settings</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+        <div class="perm-row">
+          <div class="perm-feature-col">User Management</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+          <div class="perm-cell perm-no">—</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+
+        <div class="perm-row perm-row-group-label">
+          <div class="perm-feature-col">Outbound Tasks</div>
+          <div></div><div></div><div></div><div></div>
+        </div>
+
+        <div class="perm-row">
+          <div class="perm-feature-col">Create new task</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+        <div class="perm-row">
+          <div class="perm-feature-col">Pause / Resume task</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-view">View only</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+        <div class="perm-row">
+          <div class="perm-feature-col">Delete task</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+
+        <div class="perm-row perm-row-group-label">
+          <div class="perm-feature-col">Inbound Calls</div>
+          <div></div><div></div><div></div><div></div>
+        </div>
+
+        <div class="perm-row">
+          <div class="perm-feature-col">View call list &amp; transcript</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+        </div>
+        <div class="perm-row">
+          <div class="perm-feature-col">Download MP3 / Transcript</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+        </div>
+
+        <div class="perm-row perm-row-group-label">
+          <div class="perm-feature-col">Admin</div>
+          <div></div><div></div><div></div><div></div>
+        </div>
+
+        <div class="perm-row">
+          <div class="perm-feature-col">Manage SIP Trunks</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+        <div class="perm-row">
+          <div class="perm-feature-col">Manage AI Dialogues</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+        <div class="perm-row">
+          <div class="perm-feature-col">Add / Edit users</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+          <div class="perm-cell perm-no">—</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+        <div class="perm-row" style="border-bottom:none;">
+          <div class="perm-feature-col">Export reports</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-yes">✓</div>
+          <div class="perm-cell perm-no">—</div>
+        </div>
+
+      </div><!-- /perm-matrix-wrap -->
+    </div>
+
+    <!-- ════════════════════════════════════
          SCREEN: SYSTEM SETTINGS
     ════════════════════════════════════ -->
     <div class="screen" id="screen-settings">
@@ -465,17 +661,26 @@
           </tbody>
         </table>
       </div>
-      <div class="section-header"><h3>Caller Line Configuration</h3></div>
+      <div class="section-header"><h3>SIP Trunk Configuration</h3></div>
       <div class="table-wrap">
-        <div class="table-toolbar"><button class="btn btn-primary btn-sm">+ Add Line</button></div>
+        <div class="table-toolbar">
+          <button class="btn btn-primary btn-sm" onclick="SIP_openAdd()">+ Add Trunk</button>
+        </div>
         <table>
-          <thead><tr><th>Line Name</th><th>Number</th><th>Assigned To</th><th>Active Tasks</th><th>Status</th></tr></thead>
-          <tbody>
-            <tr><td>AIS Line 1</td><td>+66 2 000 0001</td><td>AIS</td><td>2</td><td><span class="status status-running">In Use</span></td></tr>
-            <tr><td>AIS Line 2</td><td>+66 2 000 0002</td><td>AIS</td><td>1</td><td><span class="status status-running">In Use</span></td></tr>
-            <tr><td>SCB Line 1</td><td>+66 2 000 0011</td><td>SCB Bank</td><td>0</td><td><span class="status status-pending">Idle</span></td></tr>
-            <tr><td>AIS Line 1</td><td>+66 2 000 0021</td><td>AIS</td><td>1</td><td><span class="status status-running">In Use</span></td></tr>
-          </tbody>
+          <thead>
+            <tr>
+              <th>Trunk Name</th>
+              <th>Host / IP</th>
+              <th>Port</th>
+              <th>Protocol</th>
+              <th>Codec</th>
+              <th>Max Calls</th>
+              <th>Assigned Client</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="sip-trunk-tbody"></tbody>
         </table>
       </div>
     </div>
@@ -685,7 +890,7 @@
 <!-- ══════════════════════════════════════════
      INBOUND CALL DETAIL DRAWER
 ══════════════════════════════════════════ -->
-<div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCallDrawer()"></div>
+<div class="drawer-backdrop" id="drawerBackdrop" onclick="Inbound_closeDrawer()"></div>
 
 <div class="call-drawer" id="callDrawer">
 
@@ -700,7 +905,7 @@
     </div>
     <div class="drawer-header-right">
       <span class="status status-connected" id="drawer-connection-badge">Connected</span>
-      <button class="modal-close" onclick="closeCallDrawer()">✕</button>
+      <button class="modal-close" onclick="Inbound_closeDrawer()">✕</button>
     </div>
   </div>
 
@@ -913,9 +1118,32 @@
         <div class="detail-value" style="font-size:13px;color:#b0b0b0;">No</div>
       </div>
 
+      <div class="detail-divider"></div>
+
+      <!-- Audio Player -->
+      <div class="detail-section">
+        <div class="detail-label">CALL RECORDING</div>
+        <div class="audio-player" id="drawer-audio-player">
+          <div class="audio-waveform" id="drawer-waveform"></div>
+          <div class="audio-controls">
+            <button class="audio-play-btn" id="audio-play-btn" onclick="AudioPlayer_toggle()">▶</button>
+            <div class="audio-progress-wrap">
+              <div class="audio-progress-bar" id="audio-progress-bar" onclick="AudioPlayer_seek(event, this)">
+                <div class="audio-progress-fill" id="audio-progress-fill" style="width:0%"></div>
+              </div>
+              <div class="audio-time">
+                <span id="audio-current">0:00</span>
+                <span id="audio-total">0:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="drawer-actions">
         <button class="btn btn-outline btn-sm">⬇ Export</button>
-        <button class="btn btn-outline btn-sm">🎙 Play Recording</button>
+        <button id="drawer-btn-mp3" class="btn btn-outline btn-sm">🎙 Download MP3</button>
+        <button id="drawer-btn-transcript" class="btn btn-outline btn-sm">📄 Download Transcript</button>
       </div>
     </div>
 
@@ -960,7 +1188,146 @@
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════
+     MODAL: SIP TRUNK
+══════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-sipTrunk" onclick="closeModalIfOverlay(event, 'sipTrunk')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-icon">📡</div>
+      <div><h3 id="sip-modal-title">Add SIP Trunk</h3><p>Configure SIP trunk connection details</p></div>
+      <button class="modal-close" onclick="closeModal('sipTrunk')">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <div class="form-label">Trunk Name <span class="form-required">*</span></div>
+        <input id="sip-f-name" class="form-input" placeholder="e.g. AIS Trunk 1"/>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Host / IP Address <span class="form-required">*</span></div>
+        <input id="sip-f-host" class="form-input" placeholder="e.g. 10.10.1.50 or sip.provider.th"/>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Port</div>
+        <input id="sip-f-port" class="form-input" type="number" value="5060" placeholder="5060"/>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Protocol</div>
+        <select id="sip-f-protocol" class="form-select">
+          <option value="UDP">UDP</option>
+          <option value="TCP">TCP</option>
+          <option value="TLS">TLS</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Codec</div>
+        <select id="sip-f-codec" class="form-select">
+          <option value="G.711">G.711 (standard)</option>
+          <option value="G.729">G.729 (compressed)</option>
+          <option value="G.722">G.722 (HD)</option>
+          <option value="Opus">Opus</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Auth Username <span class="form-required">*</span></div>
+        <input id="sip-f-username" class="form-input" placeholder="SIP username"/>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Auth Password <span class="form-required">*</span></div>
+        <div style="position:relative;">
+          <input id="sip-f-password" class="form-input" type="password" placeholder="SIP password" style="width:100%;padding-right:40px;"/>
+          <button id="sip-pw-toggle" onclick="SIP_togglePasswordVisibility()" type="button"
+            style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:15px;">👁</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Max Concurrent Calls</div>
+        <input id="sip-f-maxConcurrent" class="form-input" type="number" value="10" placeholder="10"/>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Assigned Client</div>
+        <select id="sip-f-assignedClient" class="form-select">
+          <option value="">— None —</option>
+          <option value="AIS">AIS</option>
+          <option value="SCB Bank">SCB Bank</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Status</div>
+        <select id="sip-f-status" class="form-select">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
+    <div id="sip-form-error" style="display:none;color:#e65100;font-size:12px;font-weight:600;padding:6px 24px;background:#fff8f0;border-top:1px solid #ffe0cc;"></div>
+    <div class="form-footer">
+      <button class="btn btn-outline" onclick="closeModal('sipTrunk')">Cancel</button>
+      <button id="sip-submit-btn" class="btn btn-primary" onclick="SIP_save_form()">Add Trunk</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MODAL: USER FORM
+══════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-userForm" onclick="closeModalIfOverlay(event, 'userForm')">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header">
+      <div class="modal-header-icon">👤</div>
+      <div><h3 id="user-modal-title">Add User</h3><p>Fill in the user account details</p></div>
+      <button class="modal-close" onclick="closeModal('userForm')">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <div class="form-label">Full Name <span class="form-required">*</span></div>
+        <input id="u-f-name" class="form-input" placeholder="e.g. Somchai Jaidee"/>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Username <span class="form-required">*</span></div>
+        <input id="u-f-username" class="form-input" placeholder="e.g. somchai"/>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Email <span class="form-required">*</span></div>
+        <input id="u-f-email" class="form-input" type="email" placeholder="e.g. somchai@company.th"/>
+      </div>
+      <div class="form-group" id="user-password-group">
+        <div class="form-label">Password <span class="form-required">*</span></div>
+        <input id="u-f-password" class="form-input" type="password" placeholder="Set initial password"/>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Role <span class="form-required">*</span></div>
+        <select id="u-f-role" class="form-select">
+          <option value="superadmin">Super Admin</option>
+          <option value="admin">Admin</option>
+          <option value="supervisor">Supervisor</option>
+          <option value="agent" selected>Agent</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Status</div>
+        <select id="u-f-status" class="form-select">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+    </div>
+    <div id="user-form-error" style="display:none;color:#e65100;font-size:12px;font-weight:600;padding:6px 24px;background:#fff8f0;border-top:1px solid #ffe0cc;"></div>
+    <div class="form-footer">
+      <button class="btn btn-outline" onclick="closeModal('userForm')">Cancel</button>
+      <button id="user-submit-btn" class="btn btn-primary" onclick="Users_save_form()">Add User</button>
+    </div>
+  </div>
+</div>
+
 <script src="data/inbound_calls.js"></script>
+<script src="data/users.js"></script>
+<script src="data/sip_trunks.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/tasks.js"></script>
+<script src="js/inbound.js"></script>
+<script src="js/sip-trunks.js"></script>
+<script src="js/users.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

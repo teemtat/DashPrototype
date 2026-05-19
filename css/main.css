@@ -1317,6 +1317,236 @@ tbody tr:hover td { background: #fdfcfc; }
 .sc-confirm-btn.sc-resume:hover { background: #008a43; }
 
 /* ══════════════════════════════════════════
+   ROLE BADGES (User Management)
+══════════════════════════════════════════ */
+.role-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.role-superadmin { background: #f5f0ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+.role-admin      { background: #f0faf5; color: #00a651; border: 1px solid #b8e6cf; }
+.role-supervisor { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.role-agent      { background: #fff8f0; color: #e65100; border: 1px solid #ffe0cc; }
+
+/* User avatar (small, in table) */
+.user-avatar-sm {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: #1a1a2e;
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════
+   SIP TRUNK PROTOCOL TAGS
+══════════════════════════════════════════ */
+.sip-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'SFMono-Regular', 'Consolas', monospace;
+}
+.sip-tag-udp { background: #f0faf5; color: #065f46; border: 1px solid #a7f3d0; }
+.sip-tag-tcp { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.sip-tag-tls { background: #f5f0ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+
+/* ══════════════════════════════════════════
+   ROLE PERMISSIONS MATRIX
+══════════════════════════════════════════ */
+.perm-matrix-wrap {
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-radius: 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+/* Role header row */
+.perm-role-headers {
+  display: grid;
+  grid-template-columns: 220px repeat(4, 1fr);
+  border-bottom: 2px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.perm-feature-col {
+  padding: 14px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.perm-role-card {
+  padding: 14px 12px;
+  text-align: center;
+  border-left: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.perm-role-card p {
+  font-size: 11px;
+  color: #b0b0b0;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+/* Permission rows */
+.perm-row {
+  display: grid;
+  grid-template-columns: 220px repeat(4, 1fr);
+  border-bottom: 1px solid #fafafa;
+  transition: background 0.1s;
+}
+.perm-row:hover { background: #fdfcfc; }
+
+.perm-row .perm-feature-col {
+  font-size: 12px;
+  font-weight: 500;
+  color: #424242;
+  padding: 11px 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.perm-row-group-label {
+  background: #f9fafb;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+.perm-row-group-label .perm-feature-col {
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #b0b0b0 !important;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+/* Permission cells */
+.perm-cell {
+  padding: 11px 8px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  border-left: 1px solid #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.perm-yes  { color: #00a651; }
+.perm-no   { color: #d1d5db; font-weight: 600; }
+.perm-view {
+  color: #1d4ed8;
+  font-size: 10px;
+  font-weight: 700;
+  background: #eff6ff;
+  border-radius: 20px;
+  padding: 2px 8px;
+  margin: auto;
+}
+
+/* ══════════════════════════════════════════
+   AUDIO PLAYER
+══════════════════════════════════════════ */
+.audio-player {
+  background: #f9fafb;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 12px 12px 10px;
+  margin-top: 6px;
+}
+
+.audio-waveform {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 36px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.audio-wave-bar {
+  flex: 1;
+  border-radius: 2px;
+  background: #e0e0e0;
+  min-width: 2px;
+  transition: background 0.08s;
+}
+.audio-wave-bar.played  { background: #00a651; opacity: 0.85; }
+.audio-wave-bar.current { background: #00a651; opacity: 1; }
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.audio-play-btn {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: #00a651;
+  border: none;
+  color: white;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+.audio-play-btn:hover  { background: #008a43; }
+.audio-play-btn:active { transform: scale(0.93); }
+
+.audio-progress-wrap { flex: 1; }
+
+.audio-progress-bar {
+  height: 4px;
+  background: #e8e8e8;
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 5px;
+}
+.audio-progress-bar:hover { height: 6px; margin-bottom: 3px; }
+.audio-progress-fill {
+  height: 100%;
+  background: #00a651;
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+.audio-time {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #b0b0b0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ══════════════════════════════════════════
+   TOAST ANIMATION
+══════════════════════════════════════════ */
+@keyframes slideUp {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ══════════════════════════════════════════
    INBOUND ROW — clickable highlight
 ══════════════════════════════════════════ */
 .inbound-row {
